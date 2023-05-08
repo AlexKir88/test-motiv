@@ -1,35 +1,24 @@
 
-<script>
+<script setup>
     import Folder from './Folder.vue';
     import { getGroupList } from '../utils/requestFunction';
-    export default {
-        data: () => ({
-            folders: [],
-        }),
-        methods: {
-        loadDatas() {
-            getGroupList(0).then(res => {
-                this.folders = res; 
-            });
-        }
-    }
-    }
+    import { ref, inject, onMounted } from 'vue';
+    
+    
+
+    const { access, user, giveAccess } = inject('login');
+    const { folders, loadFolders } = inject('folders');
     
 </script>
 <template>
     
-     <v-navigation-drawer  >
-        <v-btn color="blue-darken-1" variant="text" @click="loadDatas">
-            загрузить 
-        </v-btn>
-        <v-list  > 
-            <v-list-item width="200"  v-for="folder in folders" append-icon="mdi-folder-outline">
-                <v-list-item-content>
-                    {{ folder.id }}
-                        <!-- <Folder dataFolder="folder" :key="folder.id"/>  -->
-                </v-list-item-content>
-            </v-list-item>
-        </v-list>
+     <v-navigation-drawer class="w-25" >
+        <Folder  v-if="folders.length"  :mgLeft=0 :objFolder="folder" v-for="folder in folders" :key="folder.id"/>
+        <v-spacer v-else>Загрузка...</v-spacer>
     </v-navigation-drawer>
 </template>
+<style>
+    
+
+</style>
 

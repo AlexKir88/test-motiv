@@ -20,7 +20,7 @@ export const getGroupList = async (id) => {
 export const getObjectList = async (id) => {
     const responce = await fetch(`${baseUrl}getObjectList?groupType=folder&groupId=${id}`);
     const data = await responce.json();
-    return data.result;
+    return data.result.data;
 }
 
 export const getTasksSystemInfo = async (id) => {

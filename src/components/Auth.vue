@@ -1,20 +1,27 @@
-<script>
-import { login } from '../utils/requestFunction';
-export default {
-    data: () => ({
-        dialog: true,
-        log: 'admin',
-        pass: '123456',
-        dialog2: false,
-    }),
-    methods: {
-        checkLogin() {
-            login(this.log, this.pass).then(res => {
-                res ? this.dialog = !res : this.dialog2 = true
-            });
-        }
+<script setup>
+    import { login } from '../utils/requestFunction';
+    import { ref, inject } from 'vue';
+
+    const dialog= ref(true);
+    const log= ref('admin');
+    const pass= ref('123456');
+    const dialog2= ref(false);
+
+    const { access, user, giveAccess } = inject('login');
+    const { folders, loadFolders } = inject('folders');
+
+    const checkLogin = () => {
+        login(log.value, pass.value).then(res => {
+            if(res) {
+                dialog.value = !res;
+                giveAccess(log.value);
+                loadFolders();
+                return
+            }
+            dialog2.value = true
+        });
     }
-}
+    
 </script>
 
 <template>

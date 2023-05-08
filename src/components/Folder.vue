@@ -1,21 +1,52 @@
-<script>
-    import IconFolder from './IconFolder.vue';
+<script setup>
+    import { getGroupList } from '../utils/requestFunction';
+    import { computed, ref, inject } from 'vue'
+    defineProps({
+        objFolder: Object,
+        mgLeft: Number,
+    })
+    const folders = ref([]);
+    const showChild = ref(false);
 
-    export default {
-        data: () => ({
-            dataFolder: {},
-        }),
+    const { objectsFromFolder, loadObjects } = inject('objects');
+    
+    const getChild = (id) => {
+        if(!folders.value.length){
+            getGroupList(id).then(res => {
+                folders.value = res;
+            });
+        }
+        showChild.value = !showChild.value;
+        loadObjects(id);
     }
+    const colorFolder = (objFolder) => {
+        if (objFolder.self_news){
+            return 'red'
+        };
+        if (objFolder.self_updates) {
+            return 'yellow'
+        }
+        return 'blue'
+    }
+
 </script>
 
 <template>
-    <IconFolder/> <sup>{{ folder }}</sup> 
-    <div class="sub-folder">
-        <IconFolder/><sup>100/200/300 </sup> 
-    </div>
+    <v-card 
+        width="100%"
+        class="card" 
+        height="20px" 
+        v-bind:style='{paddingLeft: mgLeft + "vw"}' 
+        @click="()=>getChild(objFolder.id)">
+        <v-icon icon="mdi-folder" :color="colorFolder(objFolder)"></v-icon>
+        {{objFolder.name + '    ' + "(" + (objFolder.self_totals || 0) + '/'+ (objFolder.self_news || 0) + '/' + (objFolder.self_updates || 0)+")" }}
+    </v-card>
+    <Folder v-if="showChild"  :mgLeft="mgLeft + 2" :objFolder="folder" v-for="folder in folders" :key="folder.id"/>
+    <v-spacer v-else></v-spacer>
 </template>
 <style>
-    .sub-folder{
-        margin-left: 30px;
+    .card {
+        font-size: 0.8rem;
+        text-align: start;
     }
 </style>

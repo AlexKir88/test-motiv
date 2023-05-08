@@ -1,8 +1,10 @@
-import { createApp } from 'vue'
+import { createApp, reactive } from 'vue'
 import App from './App.vue'
 import './style.css'
 import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiAccount } from '@mdi/js'
+
+
 
 // Vuetify
 import 'vuetify/styles'

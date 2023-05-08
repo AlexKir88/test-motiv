@@ -74,6 +74,11 @@
     "@vue/compiler-dom" "3.2.47"
     "@vue/shared" "3.2.47"
 
+"@vue/devtools-api@^6.0.0-beta.11":
+  "integrity" "sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q=="
+  "resolved" "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.5.0.tgz"
+  "version" "6.5.0"
+
 "@vue/reactivity-transform@3.2.47":
   "integrity" "sha512-m8lGXw8rdnPVVIdIFhf0LeQ/ixyHkH5plYuS83yop5n7ggVJU+z5v0zecwEnX7fa7HNLBhh2qngJJkxpwEEmYA=="
   "resolved" "https://registry.npmjs.org/@vue/reactivity-transform/-/reactivity-transform-3.2.47.tgz"
@@ -219,7 +224,7 @@
   optionalDependencies:
     "fsevents" "~2.3.2"
 
-"vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.47", "vue@3.2.47":
+"vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.47", "vue@3.2.47":
   "integrity" "sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.47.tgz"
   "version" "3.2.47"
@@ -234,3 +239,10 @@
   "integrity" "sha512-syFfeZVH6dycltqVCx4tDn68fR3r697+Jt7vJW1l3i9a5ClnwpdRBWtE6dt2bjClS2K/VpWYt+rAsLiG7sGU/g=="
   "resolved" "https://registry.npmjs.org/vuetify/-/vuetify-3.2.2.tgz"
   "version" "3.2.2"
+
+"vuex@^4.0.2":
+  "integrity" "sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q=="
+  "resolved" "https://registry.npmjs.org/vuex/-/vuex-4.0.2.tgz"
+  "version" "4.0.2"
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"

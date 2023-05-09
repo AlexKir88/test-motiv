@@ -11,7 +11,6 @@
     
 </script>
 <template>
-    
      <v-navigation-drawer class="w-25" >
         <Folder  v-if="folders.length"  :mgLeft=0 :objFolder="folder" v-for="folder in folders" :key="folder.id"/>
         <v-spacer v-else>Загрузка...</v-spacer>

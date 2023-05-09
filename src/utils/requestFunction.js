@@ -26,6 +26,6 @@ export const getObjectList = async (id) => {
 export const getTasksSystemInfo = async (id) => {
     const responce = await fetch(`${baseUrl}getTasksSystemInfo?taskIds[]=${id}`);
     const data = await responce.json();
-    return data.result;
+    return data.result.data[0];
 }
 

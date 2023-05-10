@@ -7,8 +7,8 @@
     const pass= ref('123456');
     const dialog2= ref(false);
 
-    const { access, user, giveAccess } = inject('login');
-    const { folders, loadFolders } = inject('folders');
+    const { giveAccess } = inject('login');
+    const { loadFolders } = inject('folders');
 
     const checkLogin = () => {
         login(log.value, pass.value).then(res => {
@@ -20,10 +20,8 @@
             }
             dialog2.value = true
         });
-    }
-    
+    };
 </script>
-
 <template>
     <div>
         <v-row justify="center">

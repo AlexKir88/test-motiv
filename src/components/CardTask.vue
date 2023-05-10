@@ -2,10 +2,7 @@
     import { inject } from 'vue';
 
     const { showTaskCard, taskInfo, changeVisibleTask } = inject('taskCard');
-
 </script>
-
-
 <template>
     <v-row justify="center">
         <v-dialog v-model="showTaskCard" fullscreen :scrim="true" transition="dialog-bottom-transition">
@@ -27,7 +24,7 @@
                         :subtitle="taskInfo?.enddate">
                         </v-list-item>
                     <v-list-item>
-                        <v-btn variant="text" @click="() => changeVisibleTask()">
+                        <v-btn variant="text" @click="() => changeVisibleTask()" >
                             Закрыть
                         </v-btn>
                     </v-list-item>
@@ -40,7 +37,6 @@
         </v-dialog>
     </v-row>
 </template>
-
 <style>
     .dialog-bottom-transition-enter-active,
     .dialog-bottom-transition-leave-active {

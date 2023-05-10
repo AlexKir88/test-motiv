@@ -5,42 +5,34 @@
   import Navigation from './components/Navigation.vue';
   import MainArea from './components/MainArea.vue';
   import Auth from './components/Auth.vue';
-
+  import CardTask from './components/CardTask.vue';
   
-  const idFolder = ref(0);
-  const changeFolder = (newId) => idFolder.value = newId;
-  provide('currentFolder', {
-    idFolder,
-    changeFolder,
-  });
-
+  //Athentification
   const access = ref(false);
   const user = ref('');
-
   const giveAccess = (userName) => {
     access.value = true;
     user.value = userName
   }
-    
   provide('login', {
     access,
     user,
     giveAccess,
   });
-
+  //folders level 1
   const folders = ref([])
   const loadFolders = () => {
     getGroupList(0).then(res => {
       folders.value = res;
     });
   };
-
   provide('folders', {
     folders,
     loadFolders,
   });
-
-  const objectsFromFolder = ref([])
+  //objects from current folder
+  const objectsFromFolder = ref([]);
+  const idCurrentFolder = ref();
   const sortObjectsBy = (property, revers) => {
     let negative = revers ? -1 : 1;
     objectsFromFolder.value.sort((a, b) => {
@@ -51,17 +43,19 @@
     })
   }
   const loadObjects = (id) => {
-  getObjectList(id)
-      .then(res => {
-        objectsFromFolder.value = res
-      })
+    getObjectList(id)
+        .then(res => {
+          objectsFromFolder.value = res
+        })
+    idCurrentFolder.value = id;
   }
   provide('objects', {
+    idCurrentFolder,
     objectsFromFolder,
     loadObjects,
     sortObjectsBy,
   });
-
+  //Chosen object by button 'Open'
   const showTaskCard = ref(false);
   const taskInfo = ref({});
   const changeVisibleTask = (id) => {
@@ -72,7 +66,6 @@
     });
     showTaskCard.value = false;
   };
-
   provide('taskCard', {
     showTaskCard,
     taskInfo,
@@ -80,19 +73,17 @@
   });
 
 </script>
-
 <template>
   <v-card>
     <v-layout width="100%">
         <Auth />
-        
+        <CardTask />
         <Application />
         <Navigation />
         <MainArea />
       </v-layout>
     </v-card>
 </template>
-
 <style>
   *{
     margin: 0;

@@ -1,57 +1,66 @@
 <script setup>
-   import { computed, inject, ref } from 'vue';
-   import CardTasc from './CardTasc.vue';
+   import { inject, ref, watch } from 'vue';
 
-   const { objectsFromFolder, loadObjects, sortObjectsBy } = inject('objects');
-   const { showTaskCard, taskInfo, changeVisibleTask } = inject('taskCard');
+   const { idCurrentFolder, objectsFromFolder, sortObjectsBy } = inject('objects');
+   const { changeVisibleTask } = inject('taskCard');
 
    const lastField = ref('');
    const revers = ref(false);
+   const prevHead = ref(null);
 
-   const sortBy = ( field) => {
+   //reset arrow
+   watch(idCurrentFolder, (count, prevCount) => {
+      if (prevHead.value) prevHead.value.id = '';
+   })
+
+   const sortBy = (event, field) => {
       if (field === lastField.value) {
          revers.value = !revers.value;
       } else  revers.value = false;
       sortObjectsBy(field, revers.value)
       lastField.value = field;
+      //show arrow
+      if (prevHead.value) prevHead.value.id = '';
+      event.target.id = revers.value? 'arrowDown' : 'arrowUpp';
+      prevHead.value = event.target;
    }
 
 </script>
 <template>
-     <v-table width="75vw"  fixed-header hover class="table"  height="650px" >
+     <v-table width="75vw" fixed-header  hover class="table"  height="90vh" >
        <thead>
          <tr>
-            <th class="text-left" @click="() => sortBy('object_id')">
+            <th class="text-left" @click="(event) => sortBy(event,'object_id')">
                Номер
             </th>
-            <th class="text-left" @click="() => sortBy('state')">
+            <th class="text-left" @click="(event) => sortBy(event,'state')">
                Состояние
             </th>
-            <th class="text-left" @click="() => sortBy('marker')">
+            <th class="text-left" @click="(event) => sortBy(event,'marker')">
                Маркер
             </th>
-            <!-- <th class="text-left">
+            <!-- <th class="text-left" @click="(event) => sortBy(event,'upper_name')">
                upper_name
             </th> -->
-            <th class="text-left" @click="() => sortBy('task_startdate')">
+            <th class="text-left" @click="(event) => sortBy(event,'task_startdate')">
                Начало
             </th>
-            <th class="text-left" @click="() => sortBy('task_enddate')" >
-               Конец
+            <th class="text-left" @click="(event) => sortBy(event,'task_enddate')" >
+               Окончание
             </th>
-            <th class="text-left" @click="() => sortBy('header_name')">
+            <th class="text-left" @click="(event) => sortBy(event,'header_name')">
                Задача
             </th>
-            <th class="text-left" @click="() => sortBy('center_name')">
+            <th class="text-left" @click="(event) => sortBy(event,'center_name')">
                Авторы
             </th>
-            <th class="text-left" @click="() => sortBy('bottom_name')">
+            <th class="text-left" @click="(event) => sortBy(event,'bottom_name')">
                Ответственный
             </th>
-            <th class="text-left" @click="() => sortBy('object_kind')">
+            <th class="text-left" @click="(event) => sortBy(event,'object_kind')">
                Вид
             </th>
-            <th class="text-left" @click="() => sortBy('taskstate')">
+            <th class="text-left" @click="(event) => sortBy(event,'taskstate')">
                Состояние задачи
             </th>
             <th class="text-left">
@@ -83,10 +92,14 @@
          </tr>
        </tbody>
      </v-table>
-     <CardTasc />
 </template>
-
 <style>
+   #arrowUpp::after{
+      content: '\2193';
+   }
+   #arrowDown::after{
+      content:  '\2191';
+   }
    .table {
       position: fixed;
       right: -10px;
@@ -96,7 +109,7 @@
       overflow-y: scroll;
    }
    th , td { 
-      max-width: 105px;
-      width: 30px;
+      max-width: 7vw;
+      min-width: 7vw;
    }
 </style>
